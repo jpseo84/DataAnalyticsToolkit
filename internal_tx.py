@@ -1,14 +1,14 @@
 import sys
 import pandas as pd
 
-# Check the argument of filename, if not provided, exit.
-if len(sys.argv) != 2:
-    print('Usage: python script_name.py your_file.csv')
+# Check the arguments of filenames, if not provided, exit.
+if len(sys.argv) != 3:
+    print('Usage: python script_name.py input_file.csv output_file.csv')
     sys.exit()
 
-# Use the provided filename.
+# Use the provided filenames.
 input_file = sys.argv[1]
-output_file = 'internal_transactions.csv'
+output_file = sys.argv[2]
 
 # Read the csv file
 df = pd.read_csv(input_file)
@@ -17,7 +17,7 @@ df = pd.read_csv(input_file)
 df['DEPOSIT'] = df['DEPOSIT'].replace(',', '').astype(float).fillna(0)
 df['WITHDRAW'] = df['WITHDRAW'].replace(',', '').astype(float).fillna(0)
 
-# Use only hour information to allow some delays. If this is to loose, you can expand to str 4.
+# Use only hour information to allow some delays. If this is too loose, you can expand to str 4.
 df['TXT'] = df['TXT'].str[:2]
 
 # Generating key data field using TXD, TXT and the amount.
